@@ -59,7 +59,7 @@ class TodoForm extends React.Component {
           const linksToRender = data.todoes
           console.log("linksToRender",linksToRender)
           return(
-            <div>
+          <div>
          <form onSubmit={this.handleSubmit}>
          <input type="text" name="todo" value={this.state.value} onChange={this.handleChange}
             placeholder="add a new todo..."/>
@@ -73,32 +73,5 @@ class TodoForm extends React.Component {
     );   
   }
 }
-
-// const TodoForm = ({ saveTodo }) => {
-//   const { value, reset, onChange } = useInputState();
-
-//   const onSubmit = (event) => {
-//         event.preventDefault();
-//         console.log(event.target.todo.value);
-//   return (
-//     <form
-//       onSubmit={event => {
-//         event.preventDefault();
-
-//         saveTodo(value);
-//         reset();
-//       }}
-//     >
-//       <input
-//         variant="outlined"
-//         placeholder="Add todo"
-//         margin="normal"
-//         onChange={onChange}
-//         value={value}
-//       />
-//     </form>
-//   );
-// };
-// }
 
 export default TodoForm;
