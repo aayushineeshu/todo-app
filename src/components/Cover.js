@@ -22,7 +22,7 @@ export const Landing = () => {
     const [complete,setComplete] = useState(false)
 
     const completed = () => {
-       setComplete(true) 
+       setComplete(complete === false ? true : false)
     }
 
     return (
