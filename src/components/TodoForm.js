@@ -37,18 +37,11 @@ class TodoForm extends React.Component {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
   }
 
-  onSubmit = (event) => {
-    event.preventDefault();
-        // if(newItemValue) {
-    //   this.props.addItem({newItemValue});
-    //   this.refs.form.reset();
-    // }
-  }
   render () {
     return (
         <Query query={TodoQuery}>
