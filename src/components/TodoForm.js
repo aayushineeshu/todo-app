@@ -1,69 +1,56 @@
 import React from 'react';
-import TodoList from './TodoList';
-import { Query, Mutation } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-
-const TodoQuery = gql`
-  query{
-    todoes{
-      id
-      description
-      completed
-    }
-  }
-`
-
 const CreateMutation = gql`
-  mutation($description: String!, $status: boolean!){
-    createtodo(data: {description: $string, completed: $boolean}) {
+  mutation($description: String!, $completed: Boolean!) {
+    createtodo(data: { description: $description, completed: $completed }) {
       id
       description
     }
   }
-`
+`;
 
 class TodoForm extends React.Component {
-
-  state= {
+  state = {
     value: ''
-  }
+  };
 
-  componentDidMount() {
-    //this.refs.itemName.focus();
-  }
+  handleChange = e => {
+    this.setState({ value: e.target.value });
+  };
 
-  handleChange = (event) => {
-    this.setState({value: event.target.value});
-  }
+  handleSubmit = async (e, createtodo) => {
+    e.preventDefault();
+    try {
+      await createtodo({
+        variables: { description: this.state.value, completed: false }
+      });
+      this.props.history.push('/');
+    } catch (err) {
+      console.log('oops error', err);
+    }
+  };
 
-  handleSubmit = (event) => {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
-
-  render () {
+  render() {
     return (
-        <Query query={TodoQuery}>
-        { ({ loading, error, data }) => {
-          if (loading) return <div>Fetching</div>
-          if (error) return <div>Error</div>
-
-          const linksToRender = data.todoes
-          console.log("linksToRender",linksToRender)
-          return(
+      <Mutation mutation={CreateMutation}>
+        {createtodo => (
           <div>
-         <form onSubmit={this.handleSubmit}>
-         <input type="text" name="todo" value={this.state.value} onChange={this.handleChange}
-            placeholder="add a new todo..."/>
-         <button type="submit">Add</button> 
-         {console.log("value",)}
-         </form>
-         </div>
-          )
-          }}
-        </Query>
-    );   
+            <form onSubmit={e => this.handleSubmit(e, createtodo)}>
+              <input
+                type="text"
+                name="todo"
+                value={this.state.value}
+                onChange={this.handleChange}
+                placeholder="add a new todo..."
+              />
+              <button type="submit">Add</button>
+            </form>
+          </div>
+        )}
+      </Mutation>
+    );
   }
 }
 

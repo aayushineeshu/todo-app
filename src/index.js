@@ -3,29 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from 'react-apollo';
-import gql from "graphql-tag";
-import TodoRoutes from './TodoRoutes';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const client = new ApolloClient({
     uri: "https://eu1.prisma.sh/aayushi-23b2b3/Todo/dev"
   });
-  client
-  .query({
-    query: gql`
-      {
-       todoes {
-          id
-          description
-          completed
-        }
-      }
-    `
-  })
-  .then(result => console.log(result));
+
+
 ReactDOM.render( 
     <ApolloProvider client={client}>
-        <TodoRoutes />
+        <App />
         </ApolloProvider>
     , document.getElementById('root'));
 
