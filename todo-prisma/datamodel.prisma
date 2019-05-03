@@ -1,0 +1,5 @@
+type todo {
+  id: ID! @id @unique
+  description: String!
+  completed: Boolean!
+}
